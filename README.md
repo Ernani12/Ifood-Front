@@ -53,3 +53,8 @@ Imagine um **feriado como uam Black Friday (feriado que aumenta consumo Mercado 
 ```bash
 cd backend
 ./mvnw spring-boot:run
+
+1- docker-compose up -d auth-postgres  (compor primeiro um banco)
+2- mvn clean package gerar pacote  ( jar ligado ao banco para microserviço autenticaçao)
+3- docker build -t auth-service .      (criar o serviço backend)
+4- docker run -p 8080:8080 auth-service (rodar os serviço)
