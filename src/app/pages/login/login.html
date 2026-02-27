@@ -1,0 +1,36 @@
+<h2>🍕 Pizzaria IFood</h2>
+
+<form (ngSubmit)="login()" #form="ngForm">
+  <input 
+    type="text"
+    [(ngModel)]="username"
+    name="username"
+    placeholder="Usuário"
+    required
+    #userField="ngModel">
+  
+  <br><br>
+
+  <input 
+    type="password"
+    [(ngModel)]="password"
+    name="password"
+    placeholder="Senha"
+    required
+    #passField="ngModel">
+  
+  <br><br>
+
+  <button 
+    type="submit"
+    [disabled]="loading || form.invalid">
+    
+    {{ loading ? 'Entrando...' : 'Entrar' }}
+
+  </button>
+
+  <p style="color:red; font-weight:bold;" *ngIf="message">
+  {{ message }}
+</p>
+</form>
+
