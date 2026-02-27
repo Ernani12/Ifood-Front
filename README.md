@@ -37,7 +37,7 @@ Este projeto é um **simulador de pedidos no estilo iFood**, com foco em **alta 
 
 ## ⚡ Cenário de Simulação
 
-Imagine um **feriado de Black Friday**, onde pedidos de pizza aumentam exponencialmente no iFood:
+Imagine um **feriado como uam Black Friday (feriado que aumenta consumo Mercado Livre, Amazon , IFOOD)*, onde pedidos de pizza aumentam exponencialmente no iFood:
 
 - A arquitetura **microserviços** permite que cada serviço escale individualmente
 - Kubernetes faz o **balanceamento de carga horizontal**
