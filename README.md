@@ -1,6 +1,7 @@
 # 🍕 iFood Pizza Simulator
 
-![iFood Pizza Banner](https://images.unsplash.com/photo-1601924582970-2db20f4a72b8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80)
+<img width="1080" height="630" alt="image" src="https://github.com/user-attachments/assets/b76e58fa-1593-4a13-bb4f-7e0b88735721" />
+
 
 
 > Simulação de um cenário de alta demanda de vendas (como Black Friday) usando **Angular** e **Java Spring Boot**, com arquitetura moderna e escalável.
