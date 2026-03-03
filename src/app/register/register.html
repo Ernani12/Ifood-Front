@@ -1,0 +1,17 @@
+<h2>Cadastro de Usuário</h2>
+<form (ngSubmit)="register()" #form="ngForm">
+  <input type="text" placeholder="Usuário" [(ngModel)]="username" name="username" required>
+  <br><br>
+  <input type="password" placeholder="Senha" [(ngModel)]="password" name="password" required>
+  <br><br>
+  <input type="text" placeholder="Endereço" [(ngModel)]="endereco" name="endereco">
+  <br><br>
+  
+<button 
+  type="submit" 
+  [disabled]="form.invalid || loading">
+  {{loading ? 'Registrando...' : 'Registrar'}}
+</button>
+
+</form>
+<p *ngIf="message" style="color:red; font-weight:bold;">{{message}}</p>
