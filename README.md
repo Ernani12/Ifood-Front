@@ -59,5 +59,4 @@ cd backend
 3- docker build -t auth-service .      (criar o serviço backend)
 4- docker run -p 8080:8080 auth-service (rodar os serviço)
 
-docker-compose -f docker-compose-postgres.yml up -d   # sobe o PostgreSQL
-docker-compose -f docker-compose-postgres.yml down    # desce o PostgreSQL
+docker run -d --name postgres-only -p 5432:5432 my-postgres -v postgres-data:/var/lib/postgresql/data
