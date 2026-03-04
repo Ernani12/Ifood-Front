@@ -58,3 +58,6 @@ cd backend
 2- mvn clean package gerar pacote  ( jar ligado ao banco para microserviço autenticaçao)
 3- docker build -t auth-service .      (criar o serviço backend)
 4- docker run -p 8080:8080 auth-service (rodar os serviço)
+
+docker-compose -f docker-compose-postgres.yml up -d   # sobe o PostgreSQL
+docker-compose -f docker-compose-postgres.yml down    # desce o PostgreSQL
