@@ -59,4 +59,4 @@ cd backend
 3- docker build -t auth-service .      (criar o serviço backend)
 4- docker run -p 8080:8080 auth-service (rodar os serviço)
 
-docker run -d --name postgres-only -p 5432:5432 my-postgres -v postgres-data:/var/lib/postgresql/data
+docker run -d --name postgres-only -p 5432:5432 -e POSTGRES_DB=authdb -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -v postgres-data:/var/lib/postgresql/data postgres:15
