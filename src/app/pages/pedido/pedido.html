@@ -1,6 +1,6 @@
 <h2>Resumo do Pedido</h2>
 
-<div *ngFor="let pizza of cart; trackBy: trackByName">
+<div *ngFor="let pizza of cart;">
   {{pizza.name}} - R$ {{pizza.price}} x {{pizza.quantity}}
 </div>
 
