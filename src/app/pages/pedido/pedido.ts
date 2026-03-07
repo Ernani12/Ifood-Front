@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Order, OrderService } from '../../services/order.service';
@@ -19,31 +19,26 @@ interface Pizza {
 export class PedidoComponent implements OnInit, OnDestroy {
 
   cart: Pizza[] = [];
-  total: number = 0;
-
   orderId: string | null = null;
   orderStatus: string = '';
-
   message: string = '';
   messageType: 'success' | 'error' | 'info' = 'info';
-
   customerId: string = '';
+  loading: boolean = true;
 
   private cartCheckInterval?: ReturnType<typeof setInterval>;
 
   constructor(
     private orderService: OrderService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
     this.route.queryParamMap.subscribe(params => {
-      const id = params.get('customerId');
-      this.customerId = id ?? `CUSTOMER_${Date.now()}`;
+      this.customerId = params.get('customerId') ?? `CUSTOMER_${Date.now()}`;
       console.log('Customer ID inicializado:', this.customerId);
-
-      // Carrega carrinho e inicia verificação periódica
       this.loadCartFromRedis();
       this.startCartCheckInterval();
     });
@@ -57,21 +52,22 @@ export class PedidoComponent implements OnInit, OnDestroy {
   private loadCartFromRedis(): void {
     if (!this.customerId) return;
 
+    this.loading = true;
     this.orderService.getCartFromRedis(this.customerId).subscribe({
       next: (order: Order | null) => {
-        const items = order?.items ?? []; // fallback: array vazio
+        const items = order?.items ?? [];
         this.cart = items.map(item => ({
           name: item.name,
           price: Number(item.price),
           quantity: Number(item.quantity)
         }));
-        this.total = order?.total ?? this.calculateTotal(); // fallback: calcula total
-        console.log('Carrinho carregado do Redis:', this.cart, 'Total:', this.total);
+        this.loading = false;
+        this.cdr.detectChanges(); // garante atualização do template
       },
       error: (err: any) => {
         console.error('Erro ao buscar carrinho no Redis', err);
         this.cart = [];
-        this.total = 0;
+        this.loading = false;
       }
     });
   }
@@ -86,7 +82,7 @@ export class PedidoComponent implements OnInit, OnDestroy {
     const order: Order = {
       customerId: this.customerId,
       items: this.cart.map(p => ({ name: p.name, price: p.price, quantity: p.quantity })),
-      total: this.calculateTotal()
+      total: this.total
     };
 
     console.log('Enviando pedido final:', order);
@@ -125,10 +121,9 @@ export class PedidoComponent implements OnInit, OnDestroy {
   /** ---------------- Helpers ---------------- */
   private clearCart(): void {
     this.cart = [];
-    this.total = 0;
   }
 
-  private calculateTotal(): number {
+  get total(): number {
     return this.cart.reduce((sum, p) => sum + p.price * p.quantity, 0);
   }
 
@@ -139,7 +134,6 @@ export class PedidoComponent implements OnInit, OnDestroy {
   }
 
   trackByName(index: number, pizza: Pizza): string {
-    return pizza.name;
+    return pizza.name; // garante performance do ngFor
   }
-
 }
