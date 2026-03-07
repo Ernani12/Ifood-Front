@@ -1,71 +1,61 @@
-# PizzariaFrontend
+# 🍕 iFood Pizza Simulator
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.1.4.
+<img width="1080" height="630" alt="image" src="https://github.com/user-attachments/assets/b76e58fa-1593-4a13-bb4f-7e0b88735721" />
 
-## Development server
 
-To start a local development server, run:
 
-```bash
-ng serve
-```
-
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+> Simulação de um cenário de alta demanda de vendas (como Black Friday) usando **Angular** e **Java Spring Boot**, com arquitetura moderna e escalável.
 
 ---
 
-## Microservices
+## 📝 Sobre o Projeto
 
-This repository also contains two Spring Boot microservices used by the frontend:
+Este projeto é um **simulador de pedidos no estilo iFood**, com foco em **alta escalabilidade** e **arquitetura moderna** para microserviços. Ele demonstra como um sistema de pedidos de comida (pizzas, neste caso) pode lidar com picos de demanda, usando tecnologias atuais de cloud e devops.
 
-* **order-service** – handles order management (hexagonal architecture, Kafka producer)
-* **delivery-service** – skeleton for delivery management (will consume Kafka events)
+### Tecnologias e Conceitos
 
-Each service is located in its own subdirectory with a Maven build. Launch them with `mvn spring-boot:run` after starting Kafka.
+- **Frontend:** Angular (SPA moderno e responsivo)
+- **Backend:** Java Spring Boot
+- **Arquiteturas:**  
+  - SOLID  
+  - Clean Architecture  
+  - Arquitetura Hexagonal
+- **Microserviços:** Separação de domínios e serviços independentes
+- **Containers e Orquestração:**  
+  - Docker  
+  - Kubernetes
+- **Monitoramento e Observabilidade:** Prometheus, Grafana
+- **Mensageria:** Kafka
+- **Cache e Persistência:** Redis
+- **Cloud:**  
+  - AWS (Lambda, EC2, EKS)  
+  - LocalStack para simulação de serviços AWS
+- **CI/CD:** Automação completa de build, testes e deploy
+- **Escalabilidade Horizontal:** Simulação de aumento de carga durante períodos críticos como Black Friday
+
+---
+
+## ⚡ Cenário de Simulação
+
+Imagine um **feriado como uam Black Friday (feriado que aumenta consumo Mercado Livre, Amazon , IFOOD)*, onde pedidos de pizza aumentam exponencialmente no iFood:
+
+- A arquitetura **microserviços** permite que cada serviço escale individualmente
+- Kubernetes faz o **balanceamento de carga horizontal**
+- Kafka garante que as mensagens (pedidos) não se percam
+- Redis mantém dados temporários e cache de alto desempenho
+- Prometheus + Grafana monitoram métricas em tempo real
+
+---
+
+## 🛠️ Como Rodar
+
+### Backend
+```bash
+cd backend
+./mvnw spring-boot:run
+
+1- docker-compose up -d auth-postgres  (compor primeiro um banco)
+2- mvn clean package gerar pacote  ( jar ligado ao banco para microserviço autenticaçao)
+3- docker build -t auth-service .      (criar o serviço backend)
+4- docker run -p 8080:8080 auth-service (rodar os serviço)
 
