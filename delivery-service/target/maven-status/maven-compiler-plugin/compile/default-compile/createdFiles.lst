@@ -1,0 +1,3 @@
+com\example\deliveryservice\DeliveryServiceApplication.class
+com\example\deliveryservice\domain\Delivery$DeliveryStatus.class
+com\example\deliveryservice\domain\Delivery.class

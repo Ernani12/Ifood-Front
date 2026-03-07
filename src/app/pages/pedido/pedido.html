@@ -1,0 +1,9 @@
+<h2>Resumo do Pedido</h2>
+
+<div *ngFor="let pizza of cart">
+  {{pizza.name}} - R$ {{pizza.price}} x {{pizza.quantity}}
+</div>
+
+<p><strong>Total: R$ {{total}}</strong></p>
+
+<button (click)="enviarPedido()">Enviar Pedido</button>

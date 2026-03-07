@@ -57,3 +57,15 @@ Angular CLI does not come with an end-to-end testing framework by default. You c
 ## Additional Resources
 
 For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+
+---
+
+## Microservices
+
+This repository also contains two Spring Boot microservices used by the frontend:
+
+* **order-service** – handles order management (hexagonal architecture, Kafka producer)
+* **delivery-service** – skeleton for delivery management (will consume Kafka events)
+
+Each service is located in its own subdirectory with a Maven build. Launch them with `mvn spring-boot:run` after starting Kafka.
+
