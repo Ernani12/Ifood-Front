@@ -2,9 +2,11 @@
 <nav style="padding:15px; background:#222; color:white;">
   <a routerLink="/" style="margin-right:15px; color:white;">Home</a>
   <a routerLink="/login" style="margin-right:15px; color:white;">Login</a>
-  <a routerLink="/home" style="color:white;">Área Logada</a>
-  <a routerLink="/register" style="margin-right:15px; color:white;">Cadastro</a> <!-- 👈 Novo link -->
-
+  <a routerLink="/home" style="margin-right:15px; color:white;">Área Logada</a>
+  <a routerLink="/register" style="margin-right:15px; color:white;">Cadastro</a>
+  @if (authService.isLoggedIn) {
+    <a routerLink="/pizzas" style="margin-right:15px; color:white;">Pizzas</a>
+  }
 </nav>
 
 <div style="padding:20px;">

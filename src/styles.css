@@ -1,1 +1,28 @@
-/* You can add global styles to this file, and also import other style files */
+/* Global Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  min-height: 100vh;
+  color: #2d2d2d;
+}
+
+body {
+  line-height: 1.6;
+  letter-spacing: 0.3px;
+}
+
+app-root {
+  display: block;
+}
+
+div[style*="padding:20px"] {
+  min-height: calc(100vh - 80px);
+  padding: 20px !important;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
