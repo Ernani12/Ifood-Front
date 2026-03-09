@@ -16,3 +16,22 @@
 
 <!-- Mensagem de feedback -->
 <div *ngIf="message" [ngClass]="messageType">{{ message }}</div>
+
+
+
+<div *ngIf="showModal" class="modal-overlay">
+  <div class="modal-content">
+    <h3>Pedido pronto para entrega</h3>
+    <div *ngIf="entregaPedido">
+      <ul>
+        <li *ngFor="let item of entregaPedido.items">
+          {{ item.name }} x {{ item.quantity }}
+        </li>
+      </ul>
+      <p><strong>Total:</strong> R$ {{ entregaPedido.total }}</p>
+      <p><strong>Status:</strong> {{ entregaPedido.status }}</p>
+    </div>
+    <div *ngIf="!entregaPedido">Carregando...</div>
+    <button (click)="closeModal()">Fechar</button>
+  </div>
+</div>

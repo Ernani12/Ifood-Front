@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, NgZone } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Order, OrderService } from '../../services/order.service';
@@ -32,7 +32,9 @@ export class PedidoComponent implements OnInit, OnDestroy {
     private orderService: OrderService,
     private route: ActivatedRoute,
     private router: Router,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private ngZone: NgZone
+
   ) {}
 
   ngOnInit(): void {
@@ -87,17 +89,21 @@ export class PedidoComponent implements OnInit, OnDestroy {
 
     console.log('Enviando pedido final:', order);
 
-    this.orderService.createOrder(order).subscribe({
-      next: (resp: Order) => {
-        this.orderId = resp.id ?? null;
-        this.orderStatus = resp.status ?? 'CREATED';
-        this.showMessage('Pedido criado com sucesso!', 'success');
-        this.clearCart();
-      },
-      error: (err: any) => {
-        console.error('Erro ao criar pedido', err);
-        this.showMessage('Erro ao criar pedido', 'error');
-      }
+   this.orderService.createOrder(order).subscribe({
+        next: (resp: Order) => {
+          this.orderId = resp.id ?? null;
+          this.orderStatus = resp.status ?? 'CREATED';
+          this.showMessage('Pedido criado com sucesso!', 'success');
+          
+             // Buscar e abrir modal quando o pedido estiver disponível
+          this.fetchEntregaPedido();
+
+          this.clearCart();
+        },
+        error: (err: any) => {
+          console.error('Erro ao criar pedido', err);
+          this.showMessage('Erro ao criar pedido', 'error');
+        }
     });
   }
 
@@ -135,5 +141,41 @@ export class PedidoComponent implements OnInit, OnDestroy {
 
   trackByName(index: number, pizza: Pizza): string {
     return pizza.name; // garante performance do ngFor
+  }
+
+
+
+  //pedido recebido
+
+  // Modal
+showModal = false;
+entregaPedido: Order | null = null;
+
+private fetchEntregaPedido(retries = 15, delayMs = 1000) {
+  if (!this.orderId) return;
+
+  const tryFetch = (attempt: number) => {
+    this.orderService.getEntregaPedido(this.orderId!).subscribe({
+      next: (pedido) => {
+        this.ngZone.run(() => {
+          if (pedido) {
+            this.entregaPedido = pedido;
+            this.showModal = true;
+          } else if (attempt < retries) {
+            setTimeout(() => tryFetch(attempt + 1), delayMs);
+          } else {
+            this.showMessage('Pedido ainda não processado', 'info');
+          }
+        });
+      },
+      error: (err) => console.error('Erro ao obter pedido', err)
+    });
+  };
+
+  tryFetch(0);
+}
+
+  closeModal() {
+    this.showModal = false;
   }
 }
