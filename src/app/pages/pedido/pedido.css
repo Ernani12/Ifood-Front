@@ -1,0 +1,46 @@
+/* Overlay cobrindo toda a tela */
+.modal-overlay {
+  position: fixed;      /* fixa na tela inteira */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* fundo semitransparente */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;       /* acima de tudo */
+}
+
+/* Conteúdo do modal */
+.modal-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  position: relative;
+  animation: modalFadeIn 0.3s ease-in-out;
+}
+
+/* Animação suave */
+@keyframes modalFadeIn {
+  from { opacity: 0; transform: translateY(-50px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Botão de fechar */
+.modal-content button {
+  margin-top: 15px;
+  padding: 8px 15px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.modal-content button:hover {
+  background-color: #0056b3;
+}

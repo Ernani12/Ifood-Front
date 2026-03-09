@@ -66,6 +66,11 @@ export class OrderService {
     return this.http.get<Order>(`${this.apiUrl}/temporary/${customerId}`, { observe: 'response' })
       .pipe(
         map(resp => resp.body ?? { items: [], total: 0 }) // sempre retorna um objeto
-      );
+      );   
+}
+
+getEntregaPedido(orderId: string) {
+  // chama o endpoint do microserviço de entrega
+  return this.http.get<Order>(`http://localhost:8085/entrega/orders/${orderId}`);
 }
 }
